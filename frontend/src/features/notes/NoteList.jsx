@@ -1,7 +1,9 @@
 import { useGetNotesQuery } from "./noteApiSlice";
 import Note from "./Note";
+import useAuth from "../../hooks/useAuth";
 
 const NotesList = () => {
+  const { username, isAdmin, isManager } = useAuth();
   const {
     data: notes,
     isLoading,
@@ -20,6 +22,14 @@ const NotesList = () => {
   if (isError) {
     return <p className="errmsg">{error?.data?.message}</p>;
   }
+  // only see note assigned to current user
+  // admin & manager call see all note
+  const filterIds =
+    isAdmin || isManager
+      ? [...notes.ids]
+      : notes?.ids?.filter(
+          (nodeId) => notes.entities[nodeId].username === username
+        );
 
   return (
     <>
@@ -38,7 +48,7 @@ const NotesList = () => {
           </thead>
           <tbody>
             {notes.ids?.length > 0 &&
-              notes.ids?.map((id) => <Note key={id} noteId={id} />)}
+              filterIds?.map((id) => <Note key={id} noteId={id} />)}
           </tbody>
         </table>
       )}
