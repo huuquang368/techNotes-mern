@@ -9,7 +9,7 @@ function UserList() {
     isError,
     error,
   } = useGetUsersQuery(undefined, {
-    pollingInterval: 20000, // re-query data each 60s
+    pollingInterval: 20000, // re-query data each 20s
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true, // remount component will refetch the change
   });
@@ -26,15 +26,9 @@ function UserList() {
         <table className="table table--users">
           <thead className="table__thead">
             <tr>
-              <th scope="col" className="table__th user__username">
-                Username
-              </th>
-              <th scope="col" className="table__th user__roles">
-                Roles
-              </th>
-              <th scope="col" className="table__th user__edit">
-                Edit
-              </th>
+              <th className="table__th user__username">Username</th>
+              <th className="table__th user__roles">Roles</th>
+              <th className="table__th user__edit">Edit</th>
             </tr>
           </thead>
           <tbody>

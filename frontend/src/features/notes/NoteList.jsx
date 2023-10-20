@@ -8,7 +8,11 @@ const NotesList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetNotesQuery();
+  } = useGetNotesQuery(undefined, {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  });
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -16,7 +20,6 @@ const NotesList = () => {
   if (isError) {
     return <p className="errmsg">{error?.data?.message}</p>;
   }
-  console.log(notes.ids, notes.ids?.length);
 
   return (
     <>
@@ -24,27 +27,13 @@ const NotesList = () => {
         <table className="table table--notes">
           <thead className="table__thead">
             <tr>
-              <th scope="col" className="table__th note__status">
-                Complete
-              </th>
-              <th scope="col" className="table__th note__created">
-                Created
-              </th>
-              <th scope="col" className="table__th note__updated">
-                Updated
-              </th>
-              <th scope="col" className="table__th note__title">
-                Title
-              </th>
-              <th scope="col" className="table__th note__description">
-                Description
-              </th>
-              <th scope="col" className="table__th note__username">
-                Owner
-              </th>
-              <th scope="col" className="table__th note__edit">
-                Edit
-              </th>
+              <th className="table__th note__status">Complete</th>
+              <th className="table__th note__created">Created</th>
+              <th className="table__th note__updated">Updated</th>
+              <th className="table__th note__title">Title</th>
+              <th className="table__th note__description">Description</th>
+              <th className="table__th note__username">Owner</th>
+              <th className="table__th note__edit">Edit</th>
             </tr>
           </thead>
           <tbody>

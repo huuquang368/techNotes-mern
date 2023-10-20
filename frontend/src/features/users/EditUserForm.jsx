@@ -76,13 +76,10 @@ function EditUserForm({ user }) {
     );
   });
 
-  let canSave;
-  if (password) {
-    canSave =
-      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading;
-  } else {
-    canSave = [roles.length, validUsername].every(Boolean) && !isLoading;
-  }
+  const canSave = password
+    ? [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
+    : [roles.length, validUsername].every(Boolean) && !isLoading;
+
   const errClass = isError || isDelError ? "errmsg" : "offscreen";
   const validUserClass = !validUsername ? "form__input--incomplete" : "";
   const validPwdClass =
